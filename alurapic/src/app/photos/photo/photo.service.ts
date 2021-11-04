@@ -21,5 +21,19 @@ export class PhotoService {
 
         return this.http
             .get<Photo[]>(API + '/' + userName + '/photos', { params });       
-    }    
+    }
+
+    
+    upload(description:string, allowComments: boolean, file:File){
+        //Quando há envio de arquivos temos que enviar os dados através de um formDate
+        const formData = new FormData();
+        const reader = new FileReader();
+
+        //Os dados abaixo de description, allowComments e imageFile estes formatos de nome são definidos no backend
+        formData.append('description',description);
+        formData.append('allowComments', allowComments ? 'true' : 'false');
+        formData.append('imageFile', file);
+
+        return this.http.post(API + '/photos/upload', formData);
+    }
 }
