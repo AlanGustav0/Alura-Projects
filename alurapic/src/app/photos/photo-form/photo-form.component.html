@@ -1,35 +1,29 @@
 <div class="container">
   <form class="row" [formGroup]="photoForm" (submit)="upload()">
     <div class="col-md-6 text-center">
-      <button type="button" (click)="fileInput.click()" class="btn btn-primary">
-        <i class="fa fa-image fa-4x align-middle"></i>
-      </button>
-      <input
-        type="file"
-        hidden
-        formControlName="file"
-        accept="image/*"
-        (change)="file = $event.target.files[0]"
-      />
-      <ap-vmessage
-        text="Please, select a photo"
-        *ngIf="photoForm.get('file').errors?.required"
-      >
-      </ap-vmessage>
+      <div class="form-group" *ngIf="!preview; else showPreview">
+        <button type="button" (click)="fileInput.click()" class="btn btn-primary">
+          <i class="fa fa-image fa-4x align-middle"></i>
+        </button>
+        <input #fileInput type="file" hidden formControlName="file" accept="image/*"
+          (change)="handlefile(file = $event.target.files[0])" />
+        <ap-vmessage text="Please, select a photo" *ngIf="photoForm.get('file').errors?.required">
+        </ap-vmessage>
+      </div>
+
+      <ng-template #showPreview>
+        <div class="text-center">
+          <ap-photo [url]="preview" title="Preview">
+          </ap-photo>
+        </div>
+      </ng-template>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <textarea
-          class="form-control form-control-sm"
-          formControlName="description"
-          maxlength="301"
-          placeholder="photo description"
-        ></textarea>
-        <ap-vmessage
-          text="Max length is 300"
-          *ngIf="photoForm.get('description').errors?.maxlength"
-        >
+        <textarea class="form-control form-control-sm" formControlName="description" maxlength="301"
+          placeholder="photo description"></textarea>
+        <ap-vmessage text="Max length is 300" *ngIf="photoForm.get('description').errors?.maxlength">
         </ap-vmessage>
       </div>
 
@@ -40,11 +34,7 @@
         </label>
       </div>
 
-      <button
-        type="submit"
-        [disabled]="photoForm.invalid"
-        class="btn btn-primary btn-block"
-      >
+      <button type="submit" [disabled]="photoForm.invalid" class="btn btn-primary btn-block">
         Upload
       </button>
 

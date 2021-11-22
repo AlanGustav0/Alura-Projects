@@ -25,7 +25,7 @@ export class PhotoService {
 
     
     upload(description:string, allowComments: boolean, file:File){
-        //Quando há envio de arquivos temos que enviar os dados através de um formDate
+        //Quando há envio de arquivos temos que enviar os dados através de um formData
         const formData = new FormData();
         const reader = new FileReader();
 

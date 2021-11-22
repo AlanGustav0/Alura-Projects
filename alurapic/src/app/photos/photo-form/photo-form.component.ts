@@ -12,6 +12,7 @@ export class PhotoFormComponent implements OnInit {
 
   photoForm: FormGroup;
   file: File;
+  preview: string;
 
   constructor(private formBuilder: FormBuilder, 
     private photoService: PhotoService,private router: Router) { }
@@ -31,5 +32,13 @@ export class PhotoFormComponent implements OnInit {
 
     this.photoService.upload(description,allowComments,this.file)
     .subscribe(() => this.router.navigate(['']));
+  }
+
+  //Método para realizar a conversão em base64 e obter oa dados em formato de string
+  handlefile(file:File){
+    this.file = file;
+    const fileReader = new FileReader();
+    fileReader.onloadend = (event:any) => this.preview = event.target.result;
+    fileReader.readAsDataURL(file);
   }
 }
