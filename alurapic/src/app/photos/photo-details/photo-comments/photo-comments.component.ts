@@ -8,7 +8,8 @@ import { PhotoService } from "../../photo/photo.service";
 
 @Component({
     selector:'ap-photo-comments ',
-    templateUrl:'./photo-comments.component.html'
+    templateUrl:'./photo-comments.component.html',
+    styleUrls:['./photo-comments.component.css']
 })
 export class PhotoCommentsComponent implements OnInit{
     
@@ -31,7 +32,7 @@ export class PhotoCommentsComponent implements OnInit{
     1º - Obter o comentário do textarea com commentForm.get()
     2º - Jogamos o comentário no observable "comments$" através do serviço photoService e acessando o método
     "addComment" passando o photoId e o comment por parâmetro
-    3º Utilizamos o "pipe" para realizar um pipeline de ações, dentro dele usamos o "switchMap" para mapear a operação que é realizada em seguida, no caso o "photoService.getComments" para obter o comentário da API
+    3º Utilizamos o "pipe" para realizar um pipeline de ações, dentro dele usamos o "switchMap" para mapear a operação que é realizada em seguida, realizando uma mudança no fluxo, no caso o "photoService.getComments" para obter o comentário da API
     4º Com o comentário obtido, usamos o pipe em consjunto com o "tap" para podermos realizar o efeito que esta ação terá antes de retornar a resposta, neste caso resetar o fomrulário e mostrar a mensagem ao usuário.
     */
     saveComment(){
