@@ -36,4 +36,9 @@ export class PhotoService {
 
         return this.http.post(API + '/photos/upload', formData);
     }
+
+    //Método que obtem a foto atraves do ID como parâmetro
+    findById(id:string){
+        return this.http.get<Photo>(API + '/photos/' + id);
+    }
 }
