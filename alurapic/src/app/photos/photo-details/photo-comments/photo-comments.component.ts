@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { PhotoComment } from "../../photo/photo-comment";
 import { PhotoService } from "../../photo/photo.service";
 
+
 @Component({
     selector:'ap-photo-comments ',
     templateUrl:'./photo-comments.component.html',
@@ -43,4 +44,6 @@ export class PhotoCommentsComponent implements OnInit{
             this.commentForm.reset();
         }))
     }
+
+    
 }
