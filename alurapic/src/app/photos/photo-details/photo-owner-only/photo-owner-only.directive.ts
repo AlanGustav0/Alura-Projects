@@ -11,16 +11,15 @@ Esta diretiva é responsável por exibir o ícone de lixeira somente se o usuár
 })
 export class PhotoOwnerOnlyDirective implements OnInit {
 
-    @Input()
-    ownedPhoto: Photo;
+    @Input()ownedPhoto: Photo;
 
     constructor(private element: ElementRef<any>, private renderer: Renderer, private userService: UserService) { }
 
-    //Obtemos o usuário, fazermos um sobscribe e verificamos se o id de ownedPhoto é igual ao do usuário logado, se for, usamos o 'renderer' para manipular o DOM e retirar a visualização.
+    //Obtemos o usuário, fazermos um subscribe e verificamos se o id de ownedPhoto é igual ao do usuário logado, se for, usamos o 'renderer' para manipular o DOM e retirar a visualização.
     ngOnInit(): void {
         this.userService.getUser()
         .subscribe(user => {
-            if(!user || user.id != this.ownedPhoto.id){
+            if(!user || user.id != this.ownedPhoto.userId){
                 this.renderer.setElementStyle(this.element.nativeElement,'display','none');
             }
         });
