@@ -2,11 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 import { Photo } from "./photo";
 import { PhotoComment } from './photo-comment';
 
-const API = 'http://localhost:3000';
+const API = environment.ApiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
@@ -56,7 +57,7 @@ export class PhotoService {
         return this.http.post(API + '/photos/' + photoId + '/comments', { commentText });
     }
 
-    removePhoto(photoId:number){
+    removePhoto(photoId: number) {
         return this.http.delete(API + '/photos/' + photoId);
     }
 
@@ -65,11 +66,11 @@ export class PhotoService {
     com o "of" ou então apenas deixamos qualquer outro erro ser lançado
 
     */
-    like(photoId:number){
-        return this.http.post(API + '/photos/'+photoId+'/like',{},{observe:'response'}
+    like(photoId: number) {
+        return this.http.post(API + '/photos/' + photoId + '/like', {}, { observe: 'response' }
         ).pipe(map(response => true))
-        .pipe(catchError(err => {
-            return err.status == '304' ? of(false) : throwError(err);
-        }));
+            .pipe(catchError(err => {
+                return err.status == '304' ? of(false) : throwError(err);
+            }));
     }
 }
