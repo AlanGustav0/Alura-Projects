@@ -1,5 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { Photo } from "./photo";
 import { PhotoComment } from './photo-comment';
@@ -56,5 +58,18 @@ export class PhotoService {
 
     removePhoto(photoId:number){
         return this.http.delete(API + '/photos/' + photoId);
+    }
+
+    /*Método para realizar o like da foto, onde mapeamos a resposta como true, ou false, porém na API ela retorna true
+    ou o false que seria um erro 304, e para poder capturar este erro, utilizamos o catchError retornando um observable de false
+    com o "of" ou então apenas deixamos qualquer outro erro ser lançado
+
+    */
+    like(photoId:number){
+        return this.http.post(API + '/photos/'+photoId+'/like',{},{observe:'response'}
+        ).pipe(map(response => true))
+        .pipe(catchError(err => {
+            return err.status == '304' ? of(false) : throwError(err);
+        }));
     }
 }

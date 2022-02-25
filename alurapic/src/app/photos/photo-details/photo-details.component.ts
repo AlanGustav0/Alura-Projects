@@ -40,4 +40,17 @@ export class PhotoDetailsComponent implements OnInit{
         
         );
     }
+
+    //Este método passa o id da foto para o service que retorna true ou false, caso tenha retornado true, então usamos o serviço de finById para atualizar os dados da foto com o que foi inserido no backend.
+    like(photo:Photo){
+        this.photoService.like(photo.id)
+        .subscribe(liked => {
+            if(liked){
+                this.photo$ = this.photoService.findById(photo.id);
+            }else{
+                alert('Você já curtiu esta foto!');
+            }
+        },
+        err => alert('Um erro inesperado aconteceu'));
+    }
 }
