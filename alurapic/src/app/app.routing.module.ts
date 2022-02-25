@@ -6,6 +6,7 @@ import { PhotoFormComponent } from './photos/photo-form/photo-form.component';
 import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
 import { RequireAuthenticateGuard } from './core/auth/require-authentication.guard';
 import { PhotoDetailsComponent } from './photos/photo-details/photo-details.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
 
 const routes: Routes = [
     {
@@ -32,6 +33,14 @@ const routes: Routes = [
     { 
         path: 'p/:photoId', 
         component: PhotoDetailsComponent,
+    },
+    { 
+        path: 'not-found', 
+        component: NotFoundComponent,
+    },
+    { 
+        path: '**', 
+        redirectTo: 'not-found',
     },
  
 ];
