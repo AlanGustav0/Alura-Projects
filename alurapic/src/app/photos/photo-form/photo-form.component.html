@@ -2,28 +2,48 @@
   <form class="row" [formGroup]="photoForm" (submit)="upload()">
     <div class="col-md-6 text-center">
       <div class="form-group" *ngIf="!preview; else showPreview">
-        <button immediateClick type="button" (click)="fileInput.click()" class="btn btn-primary">
+        <button
+          immediateClick
+          type="button"
+          (click)="fileInput.click()"
+          class="btn btn-primary"
+        >
           <i class="fa fa-image fa-4x align-middle"></i>
         </button>
-        <input #fileInput type="file" hidden formControlName="file" accept="image/*"
-          (change)="handlefile(file = $event.target.files[0])" />
-        <ap-vmessage text="Please, select a photo" *ngIf="photoForm.get('file').errors?.required">
+        <input
+          #fileInput
+          type="file"
+          hidden
+          formControlName="file"
+          accept="image/*"
+          (change)="handlefile((file = $event.target.files[0]))"
+        />
+        <ap-vmessage
+          text="Please, select a photo"
+          *ngIf="photoForm.get('file').errors?.required"
+        >
         </ap-vmessage>
       </div>
 
       <ng-template #showPreview>
         <div class="text-center">
-          <ap-photo [url]="preview" title="Preview">
-          </ap-photo>
+          <ap-photo [url]="preview" title="Preview"> </ap-photo>
         </div>
       </ng-template>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <textarea class="form-control form-control-sm" formControlName="description" maxlength="301"
-          placeholder="photo description"></textarea>
-        <ap-vmessage text="Max length is 300" *ngIf="photoForm.get('description').errors?.maxlength">
+        <textarea
+          class="form-control form-control-sm"
+          formControlName="description"
+          maxlength="301"
+          placeholder="photo description"
+        ></textarea>
+        <ap-vmessage
+          text="Max length is 300"
+          *ngIf="photoForm.get('description').errors?.maxlength"
+        >
         </ap-vmessage>
       </div>
 
@@ -33,12 +53,22 @@
           <input type="checkbox" formControlName="allowComments" />
         </label>
       </div>
+      <div *ngIf="!percentDone; else percent">
+        <button
+          type="submit"
+          [disabled]="photoForm.invalid"
+          class="btn btn-primary btn-block"
+        >
+          Upload
+        </button>
 
-      <button type="submit" [disabled]="photoForm.invalid" class="btn btn-primary btn-block">
-        Upload
-      </button>
-
-      <a class="btn btn-secondary btn-block">Cancel</a>
+        <a [routerLink]="['']" class="btn btn-secondary btn-block">Cancel</a>
+      </div>
+      <ng-template #percent>
+        <div class="text-center display-4">
+          <span>uploading {{ percentDone }}%</span>
+        </div>
+      </ng-template>
     </div>
   </form>
 </div>
