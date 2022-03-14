@@ -10,10 +10,19 @@ Esta diretiva é responsável por exibir o ícone de lixeira somente se o usuár
 })
 export class ShowInfLoggedDirect implements OnInit {
 
+    currentDisplay: string;
 
     constructor(private element: ElementRef<any>, private renderer: Renderer, private userService: UserService) { }
 
     ngOnInit(): void {
-         !this.userService.isLogged() && this.renderer.setElementStyle(this.element.nativeElement,'display','none');
+        this.currentDisplay = getComputedStyle(this.element.nativeElement).display;
+        this.userService.getUser().subscribe(user => {
+            if (user) {
+                this.renderer.setElementStyle(this.element.nativeElement, 'display', this.currentDisplay);
+            } else {
+                this.currentDisplay = getComputedStyle(this.element.nativeElement).display;
+                this.renderer.setElementStyle(this.element.nativeElement, 'display', 'none');
+            }
+        });
     }
 }
