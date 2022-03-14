@@ -37,18 +37,18 @@ export class PhotoFormComponent implements OnInit {
     const allowComments = this.photoForm.get('allowComments').value;
 
     this.photoService.upload(description, allowComments, this.file)
-    .pipe(finalize(() => {
+    .pipe(finalize(() => { //Finalize realiza a ação depois de todos os passos, seja de sucesso ou de erro
       this.router.navigate(['/user', this.userService.getUserName()]);
     }))
-      .subscribe((event: HttpEvent<any>) => {
-        if (event.type == HttpEventType.UploadProgress) {
-          this.percentDone = Math.round(100 * event.loaded / event.total);
-        } else if (event instanceof HttpResponse) {
+      .subscribe((event: HttpEvent<any>) => { //Capturamos o evento do tipo HttpEvent
+        if (event.type == HttpEventType.UploadProgress) { //verificamos se o evento é do tipo UploadProgree
+          this.percentDone = Math.round(100 * event.loaded / event.total); //Caso seja, incrementamos a variável percentDone com o calculo do percentual
+        } else if (event instanceof HttpResponse) { //Verificamos se o evento é um HttpResponce, para saber se a ação foi concluída
           this.alertService.success('Upload complete', true);
           
         }
       },
-      err => {
+      err => { //Em caso de erro, emitimos um alerta de erro
         console.error(err);
         this.alertService.danger('Upload error!',true);
       });

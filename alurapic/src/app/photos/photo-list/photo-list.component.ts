@@ -24,7 +24,7 @@ export class PhotoListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //A ação abaixo é necessária para que os parâmetros sejam captados toda vez que haja uma mudança de rota, com isso, o Oinit é chamado uma única vez, porém os parâmetros de rota estão sendo observados e captados.
+    //A ação abaixo é necessária para que os parâmetros sejam captados toda vez que haja uma mudança de rota, com isso, o Oninit é chamado uma única vez, porém os parâmetros de rota estão sendo observados e captados.
     this.activatedRoute.params.subscribe(params => {
       this.userName = params.userName;
       this.photos = this.activatedRoute.snapshot.data['photos'];
