@@ -15,7 +15,10 @@ export class ShowInfLoggedDirect implements OnInit {
     constructor(private element: ElementRef<any>, private renderer: Renderer, private userService: UserService) { }
 
     ngOnInit(): void {
+        //Obtemos o display atual
         this.currentDisplay = getComputedStyle(this.element.nativeElement).display;
+
+        //Caso haja usuário, então mostramos o display atual, caso contrário, o display será 'none'
         this.userService.getUser().subscribe(user => {
             if (user) {
                 this.renderer.setElementStyle(this.element.nativeElement, 'display', this.currentDisplay);
